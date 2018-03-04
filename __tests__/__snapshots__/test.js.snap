@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders addTopic correctly 1`] = `<addTopic />`;
+
+exports[`renders correctly 1`] = `<ExponentAppLoading />`;
