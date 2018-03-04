@@ -18,13 +18,6 @@ import {
 import { Entypo } from '@expo/vector-icons';
 
 class HomeScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      checked: false,
-    };
-  }
-
   render() {
     let topics = this.props.screenProps.topics;
     const { navigate } = this.props.navigation;
@@ -33,15 +26,7 @@ class HomeScreen extends React.Component {
         <ScrollView style={{paddingVertical: 20, alignSelf: 'stretch'}}>
           <View style={styles.listContainer}>
             <Text style={styles.header}>LIST OF TOPICS</Text>
-            <CheckBox
-              center
-              title='Show top 20'
-              checked={this.state.checked}
-              onPress={ () =>
-                this.setState({checked: !this.state.checked})
-              }
-            />
-            {this.showTop(this.state.checked, topics)}
+            {this.showTop(topics)}
           </View>
         </ScrollView>
         <TouchableOpacity
@@ -54,46 +39,29 @@ class HomeScreen extends React.Component {
     );
   }
 
-  showTop(checked, topics) {
-    if(!checked) {
-      return(
-        topics.map((entry, index) => {
-          return(
-            <Card title={entry.topic} key={index} containerStyle={styles.card}>
-              <View style={styles.votes}>
-                <Entypo name="chevron-up" size={20} color="black" onPress={() => this.props.screenProps.addScore(index)} />
-                <Entypo name="chevron-down" size={20} color="black" onPress={() => this.props.screenProps.subtractScore(index)} />
-                <Text>Score: {entry.score}</Text>
-              </View>
-            </Card>
-          )
-        })
-      )
-    }
-    else {
-      return(
-        topics
-          .sort((a,b) => {
-            if (a.score > b.score)
-              return -1;
-            if (a.score < b.score)
-              return 1;
-            return 0;
-          })
-          .slice(0,20)
-          .map((entry, index) => {
-            return(
-              <Card title={entry.topic} key={index} containerStyle={styles.card}>
-                <View style={styles.votes}>
-                  <Entypo name="chevron-up" size={20} color="black" onPress={() => this.props.screenProps.addScore(index)} />
-                  <Entypo name="chevron-down" size={20} color="black" onPress={() => this.props.screenProps.subtractScore(index)} />
-                  <Text>Score: {entry.score}</Text>
-                </View>
-              </Card>
-            )
-          })
-      )
-    }
+  showTop(topics) {
+    return(
+      topics
+      .sort((a,b) => {
+        if (a.score > b.score)
+          return -1;
+        if (a.score < b.score)
+          return 1;
+        return 0;
+      })
+      .slice(0,20)
+      .map((entry, index) => {
+        return(
+          <Card title={entry.topic} key={index} containerStyle={styles.card}>
+            <View style={styles.votes}>
+              <Entypo name="chevron-up" size={20} color="black" onPress={() => this.props.screenProps.addScore(index)} />
+              <Entypo name="chevron-down" size={20} color="black" onPress={() => this.props.screenProps.subtractScore(index)} />
+              <Text>Score: {entry.score}</Text>
+            </View>
+          </Card>
+        )
+      })
+    )
   }
 }
 
