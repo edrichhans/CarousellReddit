@@ -13,7 +13,6 @@ export default class addTopic extends React.Component {
         this.state = { text: 'Enter Topic here' };
     }
     render() {
-        const { navigate } = this.props.navigation;
         return (
             <View>
                 <TextInput
@@ -24,8 +23,8 @@ export default class addTopic extends React.Component {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => {
-                        this.props.screenProps.addToList({upvotes: 0, downvotes: 0, topic: this.state.text});
-                        navigate('Home');
+                        this.props.screenProps.addToList({score: 0, topic: this.state.text});
+                        this.props.navigation.goBack();
                     }}
                 >
                     <Text style={styles.buttonText}>Submit</Text>

@@ -13,7 +13,7 @@ import addTopic from './addTopic.js';
 import {
   Card
 } from 'react-native-elements';
-let Upvote = require('react-upvote');
+import { Entypo } from '@expo/vector-icons';
 
 class HomeScreen extends React.Component {
   render() {
@@ -26,9 +26,11 @@ class HomeScreen extends React.Component {
           {
             topics.map((entry, index) => {
               return(
-                <Card title={entry.topic} key={index} style={styles.card}>
-                  <View style={styles.topic}>
-                    <Text>{entry.topic}</Text>
+                <Card title={entry.topic} key={index} containerStyle={styles.card}>
+                  <View style={styles.votes}>
+                    <Entypo name="chevron-up" size={20} color="black" onPress={() => this.props.screenProps.addScore(index)} />
+                    <Entypo name="chevron-down" size={20} color="black" onPress={() => this.props.screenProps.subtractScore(index)} />
+                    <Text>Score: {entry.score}</Text>
                   </View>
                 </Card>
               )
@@ -39,6 +41,7 @@ class HomeScreen extends React.Component {
           style={styles.circleButton}
           onPress={() => navigate('addTopic')}
         >
+          <Entypo name="squared-plus" size={30} color="white" />
        </TouchableOpacity>
       </View>
     );
@@ -52,7 +55,12 @@ const SimpleApp = StackNavigator({
       title: 'Home',
     },
   },
-  addTopic: { screen: addTopic },
+  addTopic: {
+    screen: addTopic,
+    navigationOptions: {
+      title: 'Add Topic',
+    },
+  },
 });
 
 const styles = StyleSheet.create({
@@ -64,9 +72,12 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
+    alignSelf: 'stretch',
   },
   circleButton: {
     alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 20,
     marginRight: 20,
     borderWidth:1,
@@ -80,10 +91,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     fontWeight: 'bold',
+    margin: 5,
   },
   card: {
     alignSelf: 'stretch',
-    textAlign: 'center',
+  },
+  votes: {
+    flexDirection: 'row',
   }
 });
 
@@ -102,13 +116,38 @@ export default class App extends React.Component{
     });
   }
 
+  addScore(index) {
+    const topics = this.state.topics;
+    topics[index].score += 1;
+
+    // update state
+    this.setState({
+        topics,
+    });
+  }
+
+  subtractScore(index) {
+    const topics = this.state.topics;
+    topics[index].score -= 1;
+
+    // update state
+    this.setState({
+        topics,
+    });
+  }
+
   componentDidMount() {
     StatusBar.setHidden(true);
   }
 
   render() {
     return (
-      <SimpleApp screenProps={{topics: this.state.topics, addToList: this.addToList.bind(this)}}/>
+      <SimpleApp screenProps={{
+        topics: this.state.topics,
+        addToList: this.addToList.bind(this),
+        addScore: this.addScore.bind(this),
+        subtractScore: this.subtractScore.bind(this)
+      }}/>
     )
   }
 }
