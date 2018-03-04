@@ -3,8 +3,17 @@ This project was created for Carousell's coding challenge. The app is created us
 ## Installation
 This project is created using the Create React Native App. 
 
+### Build instructions
+1. Install the Expo App from the Google play store.
+2. Clone this git repository.
+3. `cd CarousellReddit`
+4. `npm install`
+5. `npm start`
+6. Open expo client on your device.
+7. scan QR code printed on the console.
+
 ### APK
-The APK can be accessed here:
+Alternatively, the APK can be accessed here:
 https://exp-shell-app-assets.s3-us-west-1.amazonaws.com/android%2F%40edrichhans%2Fcarousellreddit-84d77f5c-1f9c-11e8-89aa-0a580a782815-signed.apk
 
 
