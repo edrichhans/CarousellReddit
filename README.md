@@ -14,3 +14,36 @@ The app is able to do the following:
 * Allow the user to submit topics. A “topic” is simply a string that does not exceed 255 characters.
 * Allow the user to upvote or downvote a topic. The user may upvote or downvote the same topic multiple times.
 * Always return a list of top 20 topics (sorted by upvotes, descending) on the homepage.
+
+## Functionality
+### App
+`export default class App extends React.Component`
+is the main React Component that keeps the list of topics as its state variable.
+
+#### Functions
+* `addToList(newTopic)` - Inserts `newTopic` to `this.state.topics`.
+* `addScore(index)` - Increments the `score` attribute of the topic indexed at `index`.
+* `subtractScore(index)` - Decrements the `score` attribute of the topic indexed at `index`.
+
+#### topic
+A topic is an item in `this.state.topics`, having two attributes:
+1. score
+2. topic
+
+
+### SimpleApp
+A badly named Stack Navigator. Has two screens:
+1. HomeScreen
+2. addTopic
+
+### HomeScreen
+The main view.
+Lists out top 20 topics in descending order, with each topic having an up and down button to upvote/downvote and change the score.
+It has a big red button that calls `addTopic`.
+
+#### Functions
+* showTop - The function that returns JSX based on the items in `this.props.screenProps.topics`.
+
+### addTopic
+The view to add a new topic. Has a simple text box and submit button. It creates a new entry using the `addToList` function.
+
