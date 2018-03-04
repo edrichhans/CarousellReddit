@@ -1,5 +1,14 @@
 {
-  "expo": {
-    "sdkVersion": "25.0.0"
-  }
-}
+   "expo": {
+    "name": "Carousell Reddit - Edrich Chua",
+    "version": "1.0.0",
+    "slug": "carousellreddit",
+    "sdkVersion": "25.0.0",
+    "ios": {
+      "bundleIdentifier": "com.edrichhans.carousellreddit"
+    },
+    "android": {
+      "package": "com.edrichhans.carousellreddit"
+    }
+   }
+ }

@@ -17,18 +17,22 @@ import {
 } from 'react-native-elements';
 import { Entypo } from '@expo/vector-icons';
 
+{/*Home screen*/}
 class HomeScreen extends React.Component {
   render() {
+    {/*list of topics*/}
     let topics = this.props.screenProps.topics;
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
+        {/* scrolling */}
         <ScrollView style={{paddingVertical: 20, alignSelf: 'stretch'}}>
           <View style={styles.listContainer}>
             <Text style={styles.header}>LIST OF TOPICS</Text>
             {this.showTop(topics)}
           </View>
         </ScrollView>
+        {/* big red plus button */}
         <TouchableOpacity
           style={styles.circleButton}
           onPress={() => navigate('addTopic')}
@@ -39,9 +43,11 @@ class HomeScreen extends React.Component {
     );
   }
 
+  // function to list all the topics in JSX with sorting. */}
   showTop(topics) {
     return(
       topics
+      // sort in descending order
       .sort((a,b) => {
         if (a.score > b.score)
           return -1;
@@ -49,7 +55,9 @@ class HomeScreen extends React.Component {
           return 1;
         return 0;
       })
+      // choose the first 20
       .slice(0,20)
+      // make it JSX 
       .map((entry, index) => {
         return(
           <Card title={entry.topic} key={index} containerStyle={styles.card}>
@@ -65,6 +73,7 @@ class HomeScreen extends React.Component {
   }
 }
 
+{/* main navigator */}
 const SimpleApp = StackNavigator({
   Home: { 
     screen: HomeScreen,
@@ -120,20 +129,24 @@ const styles = StyleSheet.create({
 });
 
 
+{/* Main App Component */}
 export default class App extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
+      // array of topics
       topics: []
     };
   }
 
+  // function to add new topic
   addToList(newTopic) {
     this.setState({
       topics: [...this.state.topics, newTopic]
     });
   }
 
+  // function to add to the score of a topic given an index
   addScore(index) {
     const topics = this.state.topics;
     topics[index].score += 1;
@@ -144,22 +157,26 @@ export default class App extends React.Component{
     });
   }
 
+
+  // function to subtract from the score of a topic given an index */}
   subtractScore(index) {
     const topics = this.state.topics;
     topics[index].score -= 1;
 
-    // update state
+    {/* update state */}
     this.setState({
         topics,
     });
   }
 
   componentDidMount() {
+    // hide the status bar
     StatusBar.setHidden(true);
   }
 
   render() {
     return (
+      // pass all the functions to props
       <SimpleApp screenProps={{
         topics: this.state.topics,
         addToList: this.addToList.bind(this),
